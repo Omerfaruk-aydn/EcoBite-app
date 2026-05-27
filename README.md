@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="public/favicon.svg" alt="EcoBite Logo" width="80" height="80" />
+<img src="public/pwa-512x512.png" alt="EcoBite Logo" width="80" height="80" />
 
 # EcoBite
 
