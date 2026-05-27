@@ -1,0 +1,38 @@
+services:
+  app:
+    build:
+      context: .
+      args:
+        - VITE_API_URL=${VITE_API_URL}
+        - VITE_OPENAI_API_KEY=${VITE_OPENAI_API_KEY}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/certs:/etc/nginx/certs
+    restart: always
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGODB_URI=mongodb://db:27017/ecobite
+      - JWT_SECRET=${JWT_SECRET}
+      - OPENAI_API_KEY=${VITE_OPENAI_API_KEY}
+    restart: always
+    depends_on:
+      - db
+
+  db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    restart: always
+
+volumes:
+  mongodb_data:
